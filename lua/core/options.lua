@@ -25,11 +25,20 @@ local options = {
 	scrolloff = 8,
 	sidescrolloff = 8,
 
-	fillchars = {
-		eob = " ",
-	},
+    fillchars = {
+        eob = " ",
+        fold = " ",
+        foldopen = "",
+        foldclose = "",
+        foldsep = " ",
+    },
 
 	sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal,localoptions",
+
+	foldcolumn = "0",
+	foldlevel = 99,
+	foldlevelstart = 99,
+	foldenable = true,
 }
 
 for k, v in pairs(options) do

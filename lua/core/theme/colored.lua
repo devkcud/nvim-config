@@ -89,14 +89,19 @@ local colored_groups = {
 	["@punctuation.bracket"] = { fg = palette.light_gray },
 	["@punctuation.special"] = { fg = palette.cyan },
 
-	["@markup.heading"] = { fg = palette.white },
+	["@markup.heading.1"] = { fg = palette.white, bold = true },
+	["@markup.heading.2"] = { fg = palette.white, bold = true },
+	["@markup.heading.3"] = { fg = palette.blue, bold = true },
+	["@markup.heading.4"] = { fg = palette.blue, bold = true },
+	["@markup.heading.5"] = { fg = palette.blue, bold = true },
+	["@markup.heading.6"] = { fg = palette.yellow, bold = true },
 	["@markup.link"] = { fg = palette.cyan },
 	["@markup.link.label"] = { fg = palette.blue },
 	["@markup.link.url"] = { fg = palette.cyan, underline = true },
 	["@markup.raw"] = { fg = palette.green },
 	["@markup.list"] = { fg = palette.cyan },
-	["@markup.strong"] = { bold = true },
-	["@markup.italic"] = { italic = true },
+	["@markup.strong"] = { bold = true, fg = palette.purple },
+	["@markup.italic"] = { italic = true, fg = palette.dark_blue },
 	["@markup.link.markdown_inline"] = { fg = palette.light_gray },
 	["@markup.link.markdown_reference"] = { fg = palette.light_gray },
 
@@ -144,6 +149,8 @@ local colored_groups = {
 	DiagnosticSignInfo = { fg = palette.cyan },
 	DiagnosticSignHint = { fg = palette.medium_gray },
 	LspInlayHint = { fg = palette.medium_gray, italic = true },
+
+	IndentBlanklineContextChar = { fg = palette.cyan, bold = true },
 }
 
 for group, opts in pairs(colored_groups) do

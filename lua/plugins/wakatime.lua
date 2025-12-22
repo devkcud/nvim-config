@@ -1,4 +1,7 @@
 return {
 	"wakatime/vim-wakatime",
-	opts = {},
+	---@type wakatime.Config
+	opts = {
+		debug = false,
+	},
 }

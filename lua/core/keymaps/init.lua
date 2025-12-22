@@ -210,7 +210,7 @@ join_keymaps("Toggle", {
 	},
 	{
 		mode = "normal",
-		key = "<leader>Tc>",
+		key = "<leader>Tc",
 		func = function()
 			local function get_status()
 				return vim.api.nvim_exec2("Copilot status", { output = true }).output
@@ -225,6 +225,15 @@ join_keymaps("Toggle", {
 			end
 		end,
 		desc = "Toggle GitHub Copilot",
+	},
+	{
+		mode = "normal",
+		key = "<leader>Tu",
+		func = function()
+			vim.cmd("UfoDetach")
+			vim.cmd("UfoAttach")
+		end,
+		desc = "Refresh Ufo Folds",
 	},
 })
 
@@ -279,6 +288,32 @@ join_keymaps("Telescope", {
 
 -- Harpoon Keymaps
 -- NOTE: Defined in lua/plugins/harpoon.lua
+
+-- Ufo Keymaps
+join_keymaps("UFO", {
+	{
+		mode = "normal",
+		key = "zr",
+		func = function()
+			local ok, ufo = pcall(require, "ufo")
+			if ok then
+				ufo.openAllFolds()
+			end
+		end,
+		desc = "Open All Folds",
+	},
+	{
+		mode = "normal",
+		key = "zm",
+		func = function()
+			local ok, ufo = pcall(require, "ufo")
+			if ok then
+				ufo.closeAllFolds()
+			end
+		end,
+		desc = "Close All Folds",
+	},
+})
 
 -- Obsidian Keymaps
 join_keymaps("Obsidian", {
