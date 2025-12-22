@@ -82,17 +82,22 @@ local function get_closing_chunks(bufnr, end_lnum)
 		end
 	end
 
-	local bracket, trailing = trimmed:match("([%}%]%)])([,;]?)%s*$")
-	if bracket then
+	local brackets, trailing = trimmed:match("([%}%]%)]+)([,;]?)%s*$")
+	if brackets then
 		local leading_ws = #(line:match("^%s*") or "")
 		local bracket_idx = trimmed:find("[%}%]%)]")
 		if bracket_idx then
-			local col = leading_ws + bracket_idx - 1
-			local hl = get_ts_hl_at_pos(bufnr, end_lnum - 1, col)
-			table.insert(chunks, { bracket, hl or "@punctuation.bracket" })
+			local base_col = leading_ws + bracket_idx - 1
+			for i = 1, #brackets do
+				local char = brackets:sub(i, i)
+				local col = base_col + i - 1
+				local hl = get_ts_hl_at_pos(bufnr, end_lnum - 1, col)
+				table.insert(chunks, { char, hl or "@punctuation.bracket" })
+			end
 
 			if trailing and trailing ~= "" then
-				local trailing_hl = get_ts_hl_at_pos(bufnr, end_lnum - 1, col + 1)
+				local trailing_col = base_col + #brackets
+				local trailing_hl = get_ts_hl_at_pos(bufnr, end_lnum - 1, trailing_col)
 				table.insert(chunks, { trailing, trailing_hl or "@punctuation.delimiter" })
 			end
 		end
