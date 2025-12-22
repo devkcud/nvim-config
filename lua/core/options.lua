@@ -9,6 +9,7 @@ local options = {
 	splitright = true,
 
 	swapfile = false,
+    undofile = false,
 
 	tabstop = 4,
 	shiftwidth = 4,

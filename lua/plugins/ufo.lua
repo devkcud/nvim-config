@@ -137,7 +137,7 @@ return {
 				end
 			end
 
-			table.insert(new_virt_text, { suffix, "@comment" })
+			table.insert(new_virt_text, { suffix, "@punctuation.special" })
 
 			local closing_chunks = get_closing_chunks(bufnr, end_lnum)
 			if closing_chunks then
