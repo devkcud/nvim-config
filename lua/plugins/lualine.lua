@@ -63,7 +63,7 @@ return {
 		},
 		sections = {
 			lualine_a = { "mode" },
-			lualine_b = { "branch", { "filename", path = 0 }, "diff" },
+			lualine_b = { "branch", { "filename", path = 1 }, "diff" },
 			lualine_c = {},
 			lualine_x = { copilot_status, cord_presence_status },
 			lualine_y = { "location" },
