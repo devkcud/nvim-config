@@ -9,7 +9,7 @@ local options = {
 	splitright = true,
 
 	swapfile = false,
-    undofile = false,
+	undofile = true,
 
 	tabstop = 4,
 	shiftwidth = 4,
@@ -26,13 +26,13 @@ local options = {
 	scrolloff = 8,
 	sidescrolloff = 8,
 
-    fillchars = {
-        eob = " ",
-        fold = " ",
-        foldopen = "",
-        foldclose = "",
-        foldsep = " ",
-    },
+	fillchars = {
+		eob = " ",
+		fold = " ",
+		foldopen = "",
+		foldclose = "",
+		foldsep = " ",
+	},
 
 	sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal",
 
@@ -40,6 +40,8 @@ local options = {
 	foldlevel = 99,
 	foldlevelstart = 99,
 	foldenable = true,
+
+	showtabline = 2,
 }
 
 for k, v in pairs(options) do
