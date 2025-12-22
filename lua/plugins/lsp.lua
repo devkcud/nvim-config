@@ -1,17 +1,42 @@
+local servers = {
+	"lua_ls",
+
+	"bashls",
+
+	"clangd",
+	"omnisharp",
+	"basedpyright",
+	"rust_analyzer",
+	"gopls",
+
+	"html",
+	"cssls",
+
+	"vimls",
+
+	"ts_ls",
+	"svelte",
+
+	"jsonls",
+	"yamlls",
+
+	"marksman",
+	"ltex_plus",
+	"tinymist",
+}
+
 return {
-	"neovim/nvim-lspconfig",
+	"williamboman/mason-lspconfig.nvim",
+	opts = { ensure_installed = servers },
 	dependencies = {
 		{
 			"williamboman/mason.nvim",
-			opts = {},
+			config = function()
+				require("mason").setup({})
+				vim.lsp.enable(servers)
+			end,
 		},
-		{
-			"williamboman/mason-lspconfig.nvim",
-			opts = {
-				ensure_installed = {
-					"lua_ls",
-				},
-			},
-		},
+		{ "b0o/schemastore.nvim" },
 	},
+	config = function() end,
 }
