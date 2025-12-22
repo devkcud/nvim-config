@@ -85,6 +85,12 @@ join_keymaps("General", {
 	},
 	{
 		mode = "normal",
+		key = "<leader>e",
+		func = "<cmd>edit!<CR>",
+        desc = "Reload Current File",
+	},
+	{
+		mode = "normal",
 		key = "<leader>q",
 		func = "<cmd>wqa<CR>",
 		desc = "Save and Quit All",
