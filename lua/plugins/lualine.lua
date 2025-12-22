@@ -4,10 +4,10 @@ local function cord_presence_status()
 	local manager = require("cord.server").manager
 
 	if manager and (not manager.events_enabled or manager.is_paused or manager.is_force_idle) then
-		return "󰙯 RPC disconnected"
+		return "󰙯 RPC off"
 	end
 
-	return "󰙯 RPC connected" -- NOTE: This may be inaccurate if the presence hasn't been set yet
+	return "󰙯 RPC on" -- NOTE: This may be inaccurate if the presence hasn't been set yet
 end
 
 local function copilot_status()
@@ -15,9 +15,9 @@ local function copilot_status()
 
 	local status = copilot.output
 	if status:match("Disabled") then
-		return "󰚩  Copilot disconnected"
+		return "󰚩  Copilot off"
 	else
-		return "󰚩  Copilot connected"
+		return "󰚩  Copilot on"
 	end
 end
 
@@ -25,7 +25,6 @@ return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
-		"SmiteshP/nvim-navic",
 		"vyfor/cord.nvim",
 		"github/copilot.vim",
 	},
@@ -64,33 +63,11 @@ return {
 		},
 		sections = {
 			lualine_a = { "mode" },
-			lualine_b = { "branch", { "filename", path = 0 } },
-			lualine_c = {
-				{
-					function()
-						local navic = require("nvim-navic")
-						if navic.is_available() then
-							return navic.get_location({ depth_limit = 5 })
-						end
-						return ""
-					end,
-					cond = function()
-						local navic = require("nvim-navic")
-						return navic.is_available()
-					end,
-				},
-			},
+			lualine_b = { "branch", { "filename", path = 0 }, "diff" },
+			lualine_c = {},
 			lualine_x = { copilot_status, cord_presence_status },
-			lualine_y = { "diff", "location", "filesize" },
-			lualine_z = { "diagnostics", "filetype" },
-		},
-		inactive_sections = {
-			lualine_a = {},
-			lualine_b = {},
-			lualine_c = { { "filename", path = 1 } },
-			lualine_x = { "filetype" },
-			lualine_y = {},
-			lualine_z = {},
+			lualine_y = { "location" },
+			lualine_z = { "filetype" },
 		},
 	},
 }
