@@ -30,20 +30,6 @@ local random_emoticon = (function()
 	return icons[math.random(#icons)]
 end)()
 
-local random_hl = (function()
-	local hls = {
-		{ fg = palette.red },
-		{ fg = palette.green },
-		{ fg = palette.yellow },
-		{ fg = palette.blue },
-		{ fg = palette.purple },
-		{ fg = palette.cyan },
-		{ fg = palette.dark_blue },
-	}
-
-	return hls[math.random(#hls)]
-end)()
-
 local spacer = string.rep(" ", 3)
 
 return {
@@ -54,7 +40,7 @@ return {
 				{
 					{
 						random_emoticon,
-						hl = random_hl,
+						hl = { fg = palette.dark_blue },
 					},
 					spacer,
 				},
