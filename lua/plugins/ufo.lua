@@ -61,24 +61,46 @@ local function get_closing_chunks(bufnr, end_lnum)
 	local keywords = { "endfunction", "endfor", "endwhile", "endtry", "endif", "end", "done", "esac", "fi" }
 
 	for _, kw in ipairs(keywords) do
-		local kw_start, _ = trimmed:find(kw .. "%s*$")
-		if not kw_start then
-			kw_start, _ = trimmed:find(kw .. "[,;]%s*$")
-		end
+		if trimmed:sub(1, #kw) == kw then
+			local after = trimmed:sub(#kw + 1)
+			local rest = after
+				:gsub("^[%}%]%)]+", "")
+				:gsub("^%b()", "")
+				:gsub("^[,;]", "")
+				:gsub("^%s+$", "")
 
-		if kw_start then
-			local col = line:find(kw, 1, true) - 1
-			local hl = get_ts_hl_at_pos(bufnr, end_lnum - 1, col)
-			table.insert(chunks, { kw, hl or "@keyword" })
+			if rest == "" then
+				local leading_ws = #(line:match("^%s*") or "")
+				local col = leading_ws
 
-			local trailing = trimmed:sub(kw_start + #kw):match("^([,;])")
-			if trailing then
-				local trailing_col = col + #kw
-				local trailing_hl = get_ts_hl_at_pos(bufnr, end_lnum - 1, trailing_col)
-				table.insert(chunks, { trailing, trailing_hl or "@punctuation.delimiter" })
+				local hl = get_ts_hl_at_pos(bufnr, end_lnum - 1, col)
+				table.insert(chunks, { kw, hl or "@keyword" })
+				col = col + #kw
+
+				local closing = after:match("^([%}%]%)]+)")
+				if closing then
+					for i = 1, #closing do
+						local char = closing:sub(i, i)
+						local char_hl = get_ts_hl_at_pos(bufnr, end_lnum - 1, col)
+						table.insert(chunks, { char, char_hl or "@punctuation.bracket" })
+						col = col + 1
+					end
+					after = after:sub(#closing + 1)
+				end
+
+				if after:match("^%b()") then
+					table.insert(chunks, { "()", "@punctuation.bracket" })
+					after = after:gsub("^%b()", "")
+				end
+
+				local trailing = after:match("^([,;])")
+				if trailing then
+					local trailing_hl = get_ts_hl_at_pos(bufnr, end_lnum - 1, col)
+					table.insert(chunks, { trailing, trailing_hl or "@punctuation.delimiter" })
+				end
+
+				return chunks
 			end
-
-			return chunks
 		end
 	end
 
