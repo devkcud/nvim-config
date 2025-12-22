@@ -34,7 +34,7 @@ local options = {
         foldsep = " ",
     },
 
-	sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal,localoptions",
+	sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal",
 
 	foldcolumn = "0",
 	foldlevel = 99,

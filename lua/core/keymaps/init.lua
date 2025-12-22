@@ -30,8 +30,9 @@ join_keymaps("General", {
 	{
 		mode = "normal",
 		key = "<leader>w",
-		func = "<cmd>set wrap!<CR>",
+		func = "set wrap!",
 		desc = "Toggle Wrap",
+		kind = "function",
 	},
 
 	{
@@ -57,8 +58,9 @@ join_keymaps("General", {
 	{
 		mode = "normal",
 		key = "<F1>",
-		func = "<cmd>Neotree toggle<CR>",
+		func = "Neotree toggle",
 		desc = "Toggle File Explorer",
+		kind = "function",
 	},
 	{
 		mode = "normal",
@@ -86,14 +88,16 @@ join_keymaps("General", {
 	{
 		mode = "normal",
 		key = "<leader>e",
-		func = "<cmd>edit!<CR>",
-        desc = "Reload Current File",
+		func = "edit!",
+		desc = "Reload Current File",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "<leader>q",
-		func = "<cmd>wqa<CR>",
+		func = "wqa",
 		desc = "Save and Quit All",
+		kind = "function",
 	},
 })
 
@@ -172,32 +176,37 @@ join_keymaps("Tabs", {
 	{
 		mode = "normal",
 		key = "<C-n>",
-		func = "<cmd>tabnew<CR>",
+		func = "tabnew",
 		desc = "Open New Tab",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "<C-j>",
-		func = "<cmd>tabprevious<CR>",
+		func = "tabprevious",
 		desc = "Go to Previous Tab",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "<C-k>",
-		func = "<cmd>tabnext<CR>",
+		func = "tabnext",
 		desc = "Go to Next Tab",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "H",
-		func = "<cmd>tabm -1<CR>",
+		func = "tabm -1",
 		desc = "Move Tab Left",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "L",
-		func = "<cmd>tabm +1<CR>",
+		func = "tabm +1",
 		desc = "Move Tab Right",
+		kind = "function",
 	},
 })
 
@@ -248,14 +257,16 @@ join_keymaps("Markview", {
 	{
 		mode = "normal",
 		key = "<leader>mt",
-		func = "<cmd>Markview Toggle<CR>",
+		func = "Markview Toggle",
 		desc = "Toggle markdown preview",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "<leader>ms",
-		func = "<cmd>Markview splitToggle<CR>",
+		func = "Markview splitToggle",
 		desc = "Toggle markdown preview in split view",
+		kind = "function",
 	},
 })
 
@@ -264,20 +275,23 @@ join_keymaps("Telescope", {
 	{
 		mode = "normal",
 		key = "<leader>tf",
-		func = "<cmd>Telescope find_files<CR>",
+		func = "Telescope find_files",
 		desc = "Telescope Find Files",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "<leader>tg",
-		func = "<cmd>Telescope live_grep<CR>",
+		func = "Telescope live_grep",
 		desc = "Telescope Live Grep",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "<leader>tm",
-		func = "<cmd>Telescope git_status<CR>",
+		func = "Telescope git_status",
 		desc = "Telescope Git Status",
+		kind = "function",
 	},
 	{
 		mode = "normal",
@@ -326,20 +340,23 @@ join_keymaps("Obsidian", {
 	{
 		mode = "normal",
 		key = "<leader>ow",
-		func = "<cmd>Obsidian workspace<CR>",
+		func = "Obsidian workspace",
 		desc = "Switch Workspace",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "<leader>oq",
-		func = "<cmd>Obsidian quick_switch<CR>",
+		func = "Obsidian quick_switch",
 		desc = "Quick Switch Note",
+		kind = "function",
 	},
 	{
 		mode = "normal",
 		key = "<leader>oo",
-		func = "<cmd>Obsidian open<CR>",
+		func = "Obsidian open",
 		desc = "Open Obsidian Vault",
+		kind = "function",
 	},
 })
 
