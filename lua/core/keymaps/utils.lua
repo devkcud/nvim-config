@@ -34,9 +34,9 @@ function M.define_keymap(category, keymap)
 
 	if keymap.desc then
 		opts.desc = category .. ": " .. keymap.desc
-        if keymap.cond then
-            opts.desc = opts.desc .. " [conditions apply]"
-        end
+		if keymap.cond then
+			opts.desc = opts.desc .. " [conditions apply]"
+		end
 	end
 
 	local modes = {}
