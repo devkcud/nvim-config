@@ -63,11 +63,7 @@ local function get_closing_chunks(bufnr, end_lnum)
 	for _, kw in ipairs(keywords) do
 		if trimmed:sub(1, #kw) == kw then
 			local after = trimmed:sub(#kw + 1)
-			local rest = after
-				:gsub("^[%}%]%)]+", "")
-				:gsub("^%b()", "")
-				:gsub("^[,;]", "")
-				:gsub("^%s+$", "")
+			local rest = after:gsub("^[%}%]%)]+", ""):gsub("^%b()", ""):gsub("^[,;]", ""):gsub("^%s+$", "")
 
 			if rest == "" then
 				local leading_ws = #(line:match("^%s*") or "")
@@ -141,8 +137,10 @@ return {
 		fold_virt_text_handler = function(_, lnum, end_lnum, width, truncate)
 			local bufnr = vim.api.nvim_get_current_buf()
 			local highlighted_chunks = build_highlighted_line(bufnr, lnum)
+			local closing_chunks = get_closing_chunks(bufnr, end_lnum)
 
-			local suffix = (" 󰘖 %d "):format(end_lnum - lnum - 1) -- Do not account for the last line
+			local fold_count = closing_chunks and (end_lnum - lnum - 1) or (end_lnum - lnum)
+			local suffix = (" 󰘖 %d "):format(fold_count)
 			local suffix_width = vim.fn.strdisplaywidth(suffix)
 			local target_width = width - suffix_width
 			local cur_width = 0
@@ -166,7 +164,6 @@ return {
 
 			table.insert(new_virt_text, { suffix, "@punctuation.special" })
 
-			local closing_chunks = get_closing_chunks(bufnr, end_lnum)
 			if closing_chunks then
 				for _, chunk in ipairs(closing_chunks) do
 					table.insert(new_virt_text, chunk)
