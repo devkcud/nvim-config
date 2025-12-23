@@ -104,7 +104,7 @@ local function get_closing_chunks(bufnr, end_lnum)
 		end
 	end
 
-	local brackets, trailing = trimmed:match("([%}%]%)]+)([,;]?)%s*$")
+	local brackets, trailing = trimmed:match("^([%}%]%)]+)([,;]?)$")
 	if brackets then
 		local leading_ws = #(line:match("^%s*") or "")
 		local bracket_idx = trimmed:find("[%}%]%)]")
