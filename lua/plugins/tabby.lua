@@ -32,6 +32,22 @@ end)()
 
 local spacer = string.rep(" ", 3)
 
+---@param name string
+---@return string
+local function normalize_tab_name(name)
+	local default_name = "Untitled"
+
+	if name == "" then
+		return default_name
+	end
+
+	if name == "[No Name]" then
+		return default_name
+	end
+
+	return name:match("[^/]+$") or default_name
+end
+
 return {
 	"nanozuki/tabby.nvim",
 	config = function()
@@ -49,7 +65,7 @@ return {
 					local amount_hl = tab.is_current() and theme.modifier or theme.inactive_tab
 
 					local win = tab.current_win()
-					local name = win.buf_name():match("[^/]+$") or "Untitled"
+					local name = normalize_tab_name(win.buf_name())
 					local modified = vim.bo[win.buf().id].modified and "*" or ""
 
 					local tab_amount = #line.tabs().tabs
