@@ -11,4 +11,11 @@ return {
 			EnableImportCompletion = true,
 		},
 	},
+    root_dir = require("lspconfig.util").root_pattern(
+        ".omnisharp.json",
+        ".git",
+        "global.json",
+        "*.sln",
+        "*.csproj"
+    ),
 }

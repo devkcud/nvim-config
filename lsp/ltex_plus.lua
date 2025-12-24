@@ -23,6 +23,11 @@ return {
 				motherTongue = "en-US",
 			},
 			checkFrequency = "save",
+			dictionary = {
+				["en-US"] = {
+					"Playthrough",
+				},
+			},
 		},
 	},
 }

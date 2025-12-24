@@ -11,6 +11,7 @@ local servers = {
 
 	"html",
 	"cssls",
+    "tailwindcss-language-server",
 
 	"vimls",
 
@@ -29,6 +30,7 @@ return {
 	"williamboman/mason-lspconfig.nvim",
 	opts = { ensure_installed = servers },
 	dependencies = {
+		{ "neovim/nvim-lspconfig" },
 		{
 			"williamboman/mason.nvim",
 			config = function()
