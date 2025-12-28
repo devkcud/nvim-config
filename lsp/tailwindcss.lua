@@ -10,8 +10,6 @@ return {
 		"typescript",
 		"typescriptreact",
 		"svelte",
-		"tsx",
-		"jsx",
 	},
 	root_dir = function(fname)
 		return require("lspconfig.util").root_pattern(

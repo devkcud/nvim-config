@@ -11,7 +11,7 @@ local servers = {
 
 	"html",
 	"cssls",
-    "tailwindcss-language-server",
+    "tailwindcss",
 
 	"vimls",
 
