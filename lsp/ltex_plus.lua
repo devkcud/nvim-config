@@ -26,6 +26,8 @@ return {
 			dictionary = {
 				["en-US"] = {
 					"Playthrough",
+                    "planogram",
+                    "planograms",
 				},
 			},
 		},
