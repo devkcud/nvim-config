@@ -16,6 +16,7 @@ local servers = {
 	"vimls",
 
 	"ts_ls",
+    "astro-language-server",
 	"svelte",
 
 	"jsonls",
