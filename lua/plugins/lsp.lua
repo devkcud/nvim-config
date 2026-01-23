@@ -22,7 +22,6 @@ local servers = {
 	"yamlls",
 
 	"marksman",
-	"ltex_plus",
 	"tinymist",
 }
 
