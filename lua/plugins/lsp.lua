@@ -11,12 +11,12 @@ local servers = {
 
 	"html",
 	"cssls",
-    "tailwindcss",
+	"tailwindcss",
 
 	"vimls",
 
 	"ts_ls",
-    "astro-language-server",
+	"astro",
 	"svelte",
 
 	"jsonls",
@@ -26,19 +26,26 @@ local servers = {
 	"tinymist",
 }
 
+---@type LazySpec
 return {
 	"williamboman/mason-lspconfig.nvim",
-	opts = { ensure_installed = servers },
+	---@type MasonLspconfigSettings
+	opts = { ensure_installed = servers, automatic_enable = {} },
 	dependencies = {
 		{ "neovim/nvim-lspconfig" },
 		{
 			"williamboman/mason.nvim",
-			config = function()
-				require("mason").setup({})
-				vim.lsp.enable(servers)
-			end,
+			---@type MasonSettings
+			opts = {
+				ui = {
+					border = "rounded",
+				},
+			},
 		},
 		{ "b0o/schemastore.nvim" },
 	},
-	config = function() end,
+	config = function(_, opts)
+		require("mason-lspconfig").setup(opts)
+		vim.lsp.enable(servers)
+	end,
 }
