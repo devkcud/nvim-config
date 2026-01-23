@@ -17,6 +17,7 @@ return {
 			rust = { "rustfmt" },
 			go = { "gofmt" },
 			svelte = { "prettier" },
+            astro = { "prettier" },
 			cs = { "csharpier" },
 		},
 		format_on_save = false,
