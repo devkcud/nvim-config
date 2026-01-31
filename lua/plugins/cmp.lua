@@ -37,9 +37,7 @@ return {
 				["<C-e>"] = cmp.mapping.abort(),
 				["<CR>"] = cmp.mapping.confirm({ select = false }),
 				["<Tab>"] = cmp.mapping(function(fallback)
-					if vim.fn["copilot#GetDisplayedSuggestion"]().text ~= "" then
-						vim.api.nvim_feedkeys(vim.fn["copilot#Accept"]("\t"), "n", true)
-					elseif luasnip.locally_jumpable(1) then
+					if luasnip.locally_jumpable(1) then
 						luasnip.jump(1)
 					elseif has_words_before() then
 						cmp.complete()

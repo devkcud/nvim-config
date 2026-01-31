@@ -225,24 +225,6 @@ join_keymaps("Toggle", {
 	},
 	{
 		mode = "normal",
-		key = "<leader>Tc",
-		func = function()
-			local function get_status()
-				return vim.api.nvim_exec2("Copilot status", { output = true }).output
-			end
-
-			if get_status():match("Disabled") then
-				vim.api.nvim_exec2("Copilot enable", { output = false })
-				print("Copilot Enabled")
-			else
-				vim.api.nvim_exec2("Copilot disable", { output = false })
-				print("Copilot Disabled")
-			end
-		end,
-		desc = "Toggle GitHub Copilot",
-	},
-	{
-		mode = "normal",
 		key = "<leader>Tu",
 		func = function()
 			vim.cmd("UfoDetach")

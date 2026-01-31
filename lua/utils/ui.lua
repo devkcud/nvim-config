@@ -38,7 +38,6 @@ return {
 			Event = "",
 			Operator = "󰆕",
 			TypeParameter = "󰊄",
-			Copilot = "",
 		},
 		kind_colors = {
 			Text = palette.light_gray,
@@ -66,7 +65,6 @@ return {
 			Event = palette.red,
 			Operator = palette.cyan,
 			TypeParameter = palette.yellow,
-			Copilot = palette.cyan,
 		},
 	},
 }

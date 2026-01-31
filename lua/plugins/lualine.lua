@@ -10,23 +10,11 @@ local function cord_presence_status()
 	return "󰙯 RPC on" -- NOTE: This may be inaccurate if the presence hasn't been set yet
 end
 
-local function copilot_status()
-	local copilot = vim.api.nvim_exec2("Copilot status", { output = true })
-
-	local status = copilot.output
-	if status:match("Disabled") then
-		return "󰚩  Copilot off"
-	else
-		return "󰚩  Copilot on"
-	end
-end
-
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 		"vyfor/cord.nvim",
-		"github/copilot.vim",
 	},
 	opts = {
 		options = {
@@ -65,7 +53,7 @@ return {
 			lualine_a = { "mode" },
 			lualine_b = { "branch", { "filename", path = 1 }, "diff" },
 			lualine_c = {},
-			lualine_x = { copilot_status, cord_presence_status },
+			lualine_x = {},
 			lualine_y = { "diagnostics", "location" },
 			lualine_z = { "filetype" },
 		},
