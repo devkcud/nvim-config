@@ -38,6 +38,7 @@ return {
 			"markdown_inline",
 			"latex",
 			"typst",
+			"dockerfile",
 		})
 
 		require("treesitter-context").setup({
