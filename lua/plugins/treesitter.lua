@@ -39,6 +39,7 @@ return {
 			"latex",
 			"typst",
 			"dockerfile",
+			"terraform",
 		})
 
 		require("treesitter-context").setup({

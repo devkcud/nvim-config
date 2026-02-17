@@ -25,6 +25,7 @@ local servers = {
 	"marksman",
 	"tinymist",
 	"dockerls",
+    "terraformls"
 }
 
 ---@type LazySpec
