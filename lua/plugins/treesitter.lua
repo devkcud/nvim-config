@@ -40,6 +40,8 @@ return {
 			"typst",
 			"dockerfile",
 			"terraform",
+
+			"sql",
 		})
 
 		require("treesitter-context").setup({
