@@ -123,6 +123,30 @@ return {
 			before_init = astro_before_init,
 		})
 
+		vim.lsp.config("yamlls", {
+			settings = {
+				redhat = {
+					telemetry = {
+						enabled = false,
+					},
+				},
+				yaml = {
+					format = {
+						enable = true,
+					},
+					schemaStore = {
+						enable = false,
+						url = "",
+					},
+					schemas = require("schemastore").yaml.schemas({
+						select = {
+							"docker-compose.yml",
+						},
+					}),
+				},
+			},
+		})
+
 		vim.lsp.enable(servers)
 	end,
 }
