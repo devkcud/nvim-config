@@ -21,6 +21,7 @@ local servers = {
 
 	"jsonls",
 	"yamlls",
+	"postgres_lsp",
 
 	"marksman",
 	"tinymist",
@@ -145,6 +146,14 @@ return {
 					}),
 				},
 			},
+		})
+
+		vim.lsp.config("postgres_lsp", {
+			root_markers = {
+				"postgres-language-server.jsonc",
+				".git",
+			},
+			workspace_required = false,
 		})
 
 		vim.lsp.enable(servers)
