@@ -1,10 +1,14 @@
-local servers = {
+local csharp = require("utils.csharp")
+
+local servers = vim.tbl_filter(function(server)
+	return server ~= nil
+end, {
 	"lua_ls",
 
 	"bashls",
 
 	"clangd",
-	"omnisharp",
+	csharp.roslyn_available() and nil or "omnisharp",
 	"basedpyright",
 	"rust_analyzer",
 	"gopls",
@@ -27,7 +31,7 @@ local servers = {
 	"tinymist",
 	"dockerls",
 	"terraformls",
-}
+})
 
 local astro_root_markers = {
 	"astro.config.mjs",
@@ -38,6 +42,44 @@ local astro_root_markers = {
 	"tsconfig.json",
 	"jsconfig.json",
 	".git",
+}
+
+local lua_root_markers = {
+	{ ".luarc.json", ".luarc.jsonc", ".emmyrc.json" },
+	{ ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml" },
+	{ ".git" },
+}
+
+local lua_nvim_settings = {
+	Lua = {
+		codeLens = {
+			enable = true,
+		},
+		completion = {
+			callSnippet = "Replace",
+		},
+		diagnostics = {
+			globals = { "vim" },
+		},
+		hint = {
+			enable = true,
+			semicolon = "Disable",
+		},
+		runtime = {
+			version = "LuaJIT",
+			path = {
+				"lua/?.lua",
+				"lua/?/init.lua",
+			},
+		},
+		workspace = {
+			checkThirdParty = false,
+			library = {
+				vim.env.VIMRUNTIME,
+				"${3rd}/luv/library",
+			},
+		},
+	},
 }
 
 local function astro_before_init(init_params, config)
@@ -87,6 +129,112 @@ local function astro_before_init(init_params, config)
 	end
 end
 
+local function clear_table(tbl)
+	for key in pairs(tbl) do
+		tbl[key] = nil
+	end
+end
+
+local function lua_workspace_has_config(root_dir)
+	if type(root_dir) ~= "string" or root_dir == "" then
+		return false
+	end
+
+	return vim.uv.fs_stat(vim.fs.joinpath(root_dir, ".luarc.json")) ~= nil
+		or vim.uv.fs_stat(vim.fs.joinpath(root_dir, ".luarc.jsonc")) ~= nil
+end
+
+local function lua_before_init(init_params, config)
+	config.settings = config.settings or {}
+
+	local root_dir = config.root_dir
+	if type(root_dir) ~= "string" or root_dir == "" then
+		local root_uri = init_params.rootUri
+		if type(root_uri) == "string" then
+			root_dir = vim.uri_to_fname(root_uri)
+		end
+	end
+
+	if lua_workspace_has_config(root_dir) then
+		clear_table(config.settings)
+		return
+	end
+
+	config.settings.Lua = vim.tbl_deep_extend("force", config.settings.Lua or {}, lua_nvim_settings.Lua)
+end
+
+local function run_lsp_command(command, args)
+	local suffix = args ~= "" and (" " .. args) or ""
+
+	vim.cmd(("lsp %s%s"):format(command, suffix))
+end
+
+local function create_lsp_compat_commands()
+	local commands = {
+		{
+			name = "LspStart",
+			nargs = "?",
+			callback = function(opts)
+				run_lsp_command("enable", opts.args)
+			end,
+			desc = "Compatibility alias for :lsp enable",
+		},
+		{
+			name = "LspStop",
+			nargs = "?",
+			bang = true,
+			callback = function(opts)
+				local clients = vim.lsp.get_clients({ bufnr = 0 })
+
+				if opts.args ~= "" then
+					clients = vim.tbl_filter(function(client)
+						return client.name == opts.args
+					end, clients)
+				end
+
+				for _, client in ipairs(clients) do
+					client:stop(opts.bang)
+				end
+			end,
+			desc = "Compatibility alias for the removed :LspStop command",
+		},
+		{
+			name = "LspRestart",
+			nargs = "?",
+			callback = function(opts)
+				run_lsp_command("restart", opts.args)
+			end,
+			desc = "Compatibility alias for :lsp restart",
+		},
+	}
+
+	for _, command in ipairs(commands) do
+		if vim.fn.exists(":" .. command.name) == 0 then
+			vim.api.nvim_create_user_command(command.name, command.callback, {
+				nargs = command.nargs,
+				bang = command.bang,
+				desc = command.desc,
+			})
+		end
+	end
+
+	if vim.fn.exists(":LspInfo") == 0 then
+		vim.api.nvim_create_user_command("LspInfo", function()
+			vim.cmd("checkhealth vim.lsp")
+		end, {
+			desc = "Compatibility alias for :checkhealth vim.lsp",
+		})
+	end
+
+	if vim.fn.exists(":LspLog") == 0 then
+		vim.api.nvim_create_user_command("LspLog", function()
+			vim.cmd(("edit %s"):format(vim.fn.fnameescape(vim.lsp.log.get_filename())))
+		end, {
+			desc = "Open the Neovim LSP log file",
+		})
+	end
+end
+
 ---@type LazySpec
 return {
 	"williamboman/mason-lspconfig.nvim",
@@ -98,6 +246,10 @@ return {
 			"williamboman/mason.nvim",
 			---@type MasonSettings
 			opts = {
+				registries = {
+					"github:mason-org/mason-registry",
+					"github:Crashdummyy/mason-registry",
+				},
 				ui = {
 					border = "rounded",
 				},
@@ -107,6 +259,22 @@ return {
 	},
 	config = function(_, opts)
 		require("mason-lspconfig").setup(opts)
+		create_lsp_compat_commands()
+
+		local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+		if ok then
+			vim.lsp.config("*", {
+				capabilities = cmp_nvim_lsp.default_capabilities(),
+			})
+		end
+
+		vim.lsp.config("lua_ls", {
+			root_markers = lua_root_markers,
+			before_init = lua_before_init,
+			settings = {
+				Lua = {},
+			},
+		})
 
 		vim.lsp.config("astro", {
 			root_markers = astro_root_markers,
@@ -155,6 +323,14 @@ return {
 			},
 			workspace_required = false,
 		})
+
+		if vim.fn.exists(":CSharpInstallTools") == 0 then
+			vim.api.nvim_create_user_command("CSharpInstallTools", function()
+				vim.cmd("MasonInstall roslyn netcoredbg csharpier")
+			end, {
+				desc = "Install Roslyn, netcoredbg, and CSharpier via Mason",
+			})
+		end
 
 		vim.lsp.enable(servers)
 	end,

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "codeLens": {
+    "enable": true
+  },
+  "completion": {
+    "callSnippet": "Replace"
+  },
+  "diagnostics": {
+    "globals": [
+      "vim"
+    ]
+  },
+  "hint": {
+    "enable": true,
+    "semicolon": "Disable"
+  },
+  "runtime": {
+    "path": [
+      "lua/?.lua",
+      "lua/?/init.lua"
+    ],
+    "version": "LuaJIT"
+  },
+  "workspace": {
+    "checkThirdParty": false,
+    "ignoreDir": [
+      ".git",
+      ".claude"
+    ],
+    "library": [
+      "lua",
+      "$VIMRUNTIME",
+      "$HOME/.local/share/nvim/lazy",
+      "${3rd}/luv/library"
+    ],
+    "maxPreload": 10000,
+    "preloadFileSize": 10000
+  }
+}

@@ -31,6 +31,7 @@ return {
 			"svelte",
 
 			"json",
+			"xml",
 			"yaml",
 			"toml",
 

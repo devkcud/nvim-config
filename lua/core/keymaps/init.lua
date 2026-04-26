@@ -426,6 +426,12 @@ join_keymaps("LSP", {
 	},
 	{
 		mode = "normal",
+		key = "<leader>lc",
+		func = vim.lsp.codelens.run,
+		desc = "Run CodeLens Action",
+	},
+	{
+		mode = "normal",
 		key = "<leader>lh",
 		func = function()
 			vim.lsp.inlay_hint.enable(
@@ -434,5 +440,156 @@ join_keymaps("LSP", {
 			)
 		end,
 		desc = "Toggle LSP Inlay Hints",
+	},
+})
+
+-- Debug Keymaps
+join_keymaps("Debug", {
+	{
+		mode = "normal",
+		key = "<F5>",
+		func = function()
+			local ok, dap = pcall(require, "dap")
+			if ok then
+				dap.continue()
+			end
+		end,
+		desc = "Debug Continue",
+	},
+	{
+		mode = "normal",
+		key = "<F10>",
+		func = function()
+			local ok, dap = pcall(require, "dap")
+			if ok then
+				dap.step_over()
+			end
+		end,
+		desc = "Debug Step Over",
+	},
+	{
+		mode = "normal",
+		key = "<F11>",
+		func = function()
+			local ok, dap = pcall(require, "dap")
+			if ok then
+				dap.step_into()
+			end
+		end,
+		desc = "Debug Step Into",
+	},
+	{
+		mode = "normal",
+		key = "<F12>",
+		func = function()
+			local ok, dap = pcall(require, "dap")
+			if ok then
+				dap.step_out()
+			end
+		end,
+		desc = "Debug Step Out",
+	},
+	{
+		mode = "normal",
+		key = "<leader>db",
+		func = function()
+			local ok, dap = pcall(require, "dap")
+			if ok then
+				dap.toggle_breakpoint()
+			end
+		end,
+		desc = "Toggle Breakpoint",
+	},
+	{
+		mode = "normal",
+		key = "<leader>dB",
+		func = function()
+			local ok, dap = pcall(require, "dap")
+			if ok then
+				dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+			end
+		end,
+		desc = "Set Conditional Breakpoint",
+	},
+	{
+		mode = "normal",
+		key = "<leader>du",
+		func = function()
+			local ok, dapui = pcall(require, "dapui")
+			if ok then
+				dapui.toggle()
+			end
+		end,
+		desc = "Toggle Debug UI",
+	},
+	{
+		mode = { "normal", "visual" },
+		key = "<leader>de",
+		func = function()
+			local ok, dapui = pcall(require, "dapui")
+			if ok then
+				dapui.eval()
+			end
+		end,
+		desc = "Evaluate Debug Expression",
+	},
+})
+
+-- Test Keymaps
+join_keymaps("Tests", {
+	{
+		mode = "normal",
+		key = "<leader>tr",
+		func = function()
+			local ok, neotest = pcall(require, "neotest")
+			if ok then
+				neotest.run.run()
+			end
+		end,
+		desc = "Run Nearest Test",
+	},
+	{
+		mode = "normal",
+		key = "<leader>tR",
+		func = function()
+			local ok, neotest = pcall(require, "neotest")
+			if ok then
+				neotest.run.run(vim.fn.expand("%"))
+			end
+		end,
+		desc = "Run Tests in File",
+	},
+	{
+		mode = "normal",
+		key = "<leader>td",
+		func = function()
+			local ok, neotest = pcall(require, "neotest")
+			if ok then
+				neotest.run.run({ strategy = "dap" })
+			end
+		end,
+		desc = "Debug Nearest Test",
+	},
+	{
+		mode = "normal",
+		key = "<leader>ts",
+		func = function()
+			local ok, neotest = pcall(require, "neotest")
+			if ok then
+				neotest.summary.toggle()
+			end
+		end,
+		desc = "Toggle Test Summary",
+	},
+	{
+		mode = "normal",
+		key = "<leader>to",
+		func = function()
+			local ok, neotest = pcall(require, "neotest")
+			if ok then
+				neotest.output.open({ enter = true, auto_close = true })
+			end
+		end,
+		desc = "Open Test Output",
 	},
 })
