@@ -29,6 +29,8 @@ return {
 			"typescript",
 			"tsx",
 			"svelte",
+			"qmljs",
+			"qmldir",
 
 			"json",
 			"xml",

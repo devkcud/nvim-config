@@ -19,6 +19,8 @@ return {
 			go = { "gofmt" },
 			svelte = { "prettier" },
 			astro = { "prettier" },
+			qml = { "qmlformat" },
+			qmljs = { "qmlformat" },
 			cs = { "csharpier" },
 			terraform = { "terraform_fmt" },
 		},

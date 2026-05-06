@@ -22,6 +22,7 @@ end, {
 	"ts_ls",
 	"astro",
 	"svelte",
+	"qmlls",
 
 	"jsonls",
 	"yamlls",
@@ -322,6 +323,10 @@ return {
 				".git",
 			},
 			workspace_required = false,
+		})
+
+		vim.lsp.config("qmlls", {
+			root_markers = { ".qmlls.ini", "CMakeLists.txt", ".qmlproject", ".git" },
 		})
 
 		if vim.fn.exists(":CSharpInstallTools") == 0 then
