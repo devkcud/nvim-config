@@ -78,9 +78,8 @@ return {
 					return vim_item
 				end,
 			},
-			confirm_opts = {
-				behavior = cmp.ConfirmBehavior.Replace,
-				select = false,
+			confirmation = {
+				default_behavior = cmp.ConfirmBehavior.Replace,
 			},
 			window = {
 				completion = cmp.config.window.bordered({
@@ -133,6 +132,20 @@ return {
 					cmp.config.compare.length,
 					cmp.config.compare.order,
 				},
+			},
+		})
+
+		cmp.setup.filetype("cs", {
+			mapping = {
+				["<CR>"] = cmp.mapping.confirm({
+					behavior = cmp.ConfirmBehavior.Replace,
+					select = true,
+				}),
+			},
+			performance = {
+				-- Roslyn override-method completions usually need completionItem/resolve
+				-- before cmp can expand the final snippet/text edit.
+				confirm_resolve_timeout = 500,
 			},
 		})
 
