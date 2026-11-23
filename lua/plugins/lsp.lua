@@ -8,6 +8,7 @@ end, {
 	"bashls",
 
 	"clangd",
+	"jdtls",
 	csharp.roslyn_available() and nil or "omnisharp",
 	"basedpyright",
 	"rust_analyzer",
@@ -243,6 +244,7 @@ return {
 	opts = { ensure_installed = servers, automatic_enable = {} },
 	dependencies = {
 		{ "neovim/nvim-lspconfig" },
+		{ "mfussenegger/nvim-jdtls" },
 		{
 			"williamboman/mason.nvim",
 			---@type MasonSettings

@@ -49,3 +49,29 @@ local options = {
 for k, v in pairs(options) do
 	vim.opt[k] = v
 end
+
+local group = vim.api.nvim_create_augroup("NoConceal", { clear = true })
+
+vim.api.nvim_create_autocmd("OptionSet", {
+	group = group,
+	pattern = "conceallevel",
+	callback = function()
+		if tonumber(vim.v.option_new) ~= 0 then
+			vim.opt.conceallevel = 0
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "SafeState" }, {
+	group = group,
+	callback = function()
+		if vim.go.conceallevel ~= 0 then
+			vim.go.conceallevel = 0
+		end
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			if vim.wo[win].conceallevel ~= 0 then
+				vim.wo[win].conceallevel = 0
+			end
+		end
+	end,
+})

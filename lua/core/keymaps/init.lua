@@ -239,7 +239,7 @@ join_keymaps("Markview", {
 	{
 		mode = "normal",
 		key = "<leader>mt",
-		func = "Markview Toggle",
+		func = "Markview toggle",
 		desc = "Toggle markdown preview",
 		kind = "function",
 	},

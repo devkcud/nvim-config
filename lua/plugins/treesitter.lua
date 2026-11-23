@@ -15,6 +15,7 @@ return {
 			"c",
 			"cpp",
 			"c_sharp",
+			"java",
 			"python",
 			"rust",
 			"go",

@@ -17,6 +17,7 @@ return {
 			toml = { "taplo" },
 			rust = { "rustfmt" },
 			go = { "gofmt" },
+			java = { lsp_format = "prefer" },
 			svelte = { "prettier" },
 			astro = { "prettier" },
 			qml = { "qmlformat" },

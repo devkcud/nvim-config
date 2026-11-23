@@ -30,11 +30,12 @@ return {
 		-- Style
 		window = {
 			position = "right",
+			auto_expand_width = true,
 		},
 		popup_border_style = "rounded",
 		default_component_configs = {
 			indent = {
-				indent_size = 4,
+				indent_size = 2,
 				padding = 2,
 				indent_marker = "│",
 				last_indent_marker = "│",
@@ -82,7 +83,7 @@ return {
 				enabled = true,
 				leave_dirs_open = false,
 			},
-			group_empty_dirs = false,
+			group_empty_dirs = true,
 		},
 
 		-- Events

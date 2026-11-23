@@ -16,6 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
+		{ dir = "/nvme/Projects/work/didcat/repos/meowy/editor/nvim" },
 	},
 	change_detection = {
 		notify = false,
